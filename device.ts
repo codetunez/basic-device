@@ -39,7 +39,7 @@ async function connect(connectType: string) {
             client = await ModuleClient.fromEnvironment(Mqtt);
             break;
         case 'dps':
-            const transformedSasKey = dps.rootKey ? computeDrivedSymmetricKey(dps.sasKey, dps.deviceId) : dps.sasKey;
+            const transformedSasKey = dps.rootKey ? computeDerivedSymmetricKey(dps.sasKey, dps.deviceId) : dps.sasKey;
             const provisioningSecurityClient = new SymmetricKeySecurityClient(dps.deviceId, dps.sasKey);
             const provisioningClient = ProvisioningDeviceClient.create('global.azure-devices-provisioning.net', dps.dpsScopeId, new MqttDps(), provisioningSecurityClient);
 
@@ -91,7 +91,7 @@ async function mainRunloop(client) {
     }, 60000);
 };
 
-function computeDrivedSymmetricKey(masterKey, regId) {
+function computeDerivedSymmetricKey(masterKey, regId) {
     return Crypto.createHmac('SHA256', Buffer.from(masterKey, 'base64'))
         .update(regId, 'utf8')
         .digest('base64');
