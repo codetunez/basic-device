@@ -8,7 +8,7 @@ import { ProvisioningDeviceClient } from 'azure-iot-provisioning-device';
 import * as Crypto from 'crypto';
 
 // Only required when connecting in sas or conn connection modes
-const deviceConnString = null;
+const deviceConnString = '';
 
 // Only required when connecting is dps connection mode
 const dps = {
@@ -17,7 +17,7 @@ const dps = {
     sasKey: '',
     rootKey: false,
     dpsPayload: {}
-}
+};
 
 // Only required when needing to add options to the connection client
 const options = {};
@@ -65,7 +65,7 @@ async function connect(connectType: string) {
         }
     }
 
-    mainRunloop(client)
+    mainRunloop(client);
 }
 
 async function mainRunloop(client) {
@@ -73,22 +73,22 @@ async function mainRunloop(client) {
     await client.open();
     const twin = await client.getTwin();
 
-    twin.on.properties.desired((delta: any) => {
+    twin.on('properties.desired', (delta: any) => {
         console.log('Received payload: ' + JSON.stringify(delta));
-    })
+    });
 
     setInterval(() => {
-        const payload = { "randomTelemetry": Math.floor(Math.random() * 100) }
+        const payload = { "randomTelemetry": Math.floor(Math.random() * 100) };
         client.sendEvent(JSON.stringify(payload));
         console.log('Sending telemetry payload: ' + JSON.stringify(payload));
-    }, 15000)
+    }, 15000);
 
     setInterval(() => {
-        const payload = { "randomProperty": Math.floor(Math.random() * 100) }
+        const payload = { "randomProperty": Math.floor(Math.random() * 100) };
         twin.properties.reported.update(payload, () => {
             console.log('Sending reported payload: ' + JSON.stringify(payload));
-        })
-    }, 60000)
+        });
+    }, 60000);
 };
 
 function computeDrivedSymmetricKey(masterKey, regId) {
