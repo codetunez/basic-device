@@ -97,4 +97,4 @@ function computeDerivedSymmetricKey(masterKey, regId) {
         .digest('base64');
 }
 
-connect('conn'); // Device connection options: conn|dps|module|sas
+connect('module'); // Device connection options: conn|dps|module|sas
