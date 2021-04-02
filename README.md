@@ -1,15 +1,24 @@
 # basic-device
 
-This codebase can be used as a starter for creating a simulated device to connect on an Azure IoT Hub. The device can be setup to be a regular device, an Edge module or a leaf device for a gateway (using a cert). It contains a base implementation for sending telemetry and sending/receiving a twin. After cloning this repo ...
+This codebase can be used as a starter for creating a simulated device to connect on an Azure IoT Hub. The device can be setup to be a regular device, an Edge module or a leaf device for a gateway (using a cert). It contains a base implementation for sending telemetry and sending/receiving a twin.
+
+## Setup
+- Install NodeJS LTS
+- Install these packages before building this repo
+
+  ```
+  npm i typescript -g
+  ```
+- Clone this repo
 
 ## Install the node packages
+After cloning, using CMD/Shell to navigate to the cloned folder and install the packages
 ```
 npm ci
 ```
 
 ## Update the device connection type code
-
-Line 119;
+Use a text editor or vscode to update Line 119 of [device.ts](device.ts)
 ```
 connect('dpsS');
 ```
@@ -30,7 +39,7 @@ npm run build
 npm run start
 ```
 
-## Using basic-device as a Leaf Device connecting through an Edge Gateway
+### __Using basic-device as a Leaf Device connecting through an Edge Gateway__
 Set up the device connection per desired and update *gatewayHostName* in the code to be the DNS name of the Edge device acting as a gateway.
 
 Finally, ensure you have set the following environment variable *before* running the code and ensure the pem is at the location
@@ -41,10 +50,4 @@ or
 ```
 export NODE_EXTRA_CA_CERTS=<full path to root cert pem file>
 ```
-To learn more about connecting downstream devices, visit the following [documentation](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-connect-downstream-device?view=iotedge-2018-06)
-
-## Dependencies
-Install these packages before building this repo
-```
-npm i typescript -g
-```
+This is a basic manifest file that can be used in your Edge deployment [nomodule_manifest](nomodule_manifest.json). To learn more about connecting downstream devices, visit the following [documentation](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-connect-downstream-device?view=iotedge-2018-06)
